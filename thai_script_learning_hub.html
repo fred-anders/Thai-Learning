@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thai Language Learning Hub & Script Guide</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .thai-font {
+            font-family: 'Sarabun', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header Banner -->
+    <header class="bg-gradient-to-r from-teal-700 to-cyan-800 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight">ภาษาไทย • Thai Script Learning Hub</h1>
+                <p class="text-teal-100 mt-1 text-sm sm:text-base">An interactive quick-guide to mastering Thai consonants, vowels, and complex tone systems offline.</p>
+            </div>
+            <div class="bg-teal-900/40 border border-teal-500/30 px-4 py-2 rounded-lg text-xs sm:text-sm text-teal-200 backdrop-blur-xs text-center md:text-left">
+                <strong>💡 Desktop Pro-Tip:</strong> Save this file (<kbd class="bg-teal-950 px-1 rounded">Ctrl+S</kbd> or <kbd class="bg-teal-950 px-1 rounded">Cmd+S</kbd>) to keep it completely offline forever!
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation Tabs Bar -->
+    <div class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-8 overflow-x-auto py-1">
+                <button onclick="switchTab('consonants-tab')" id="btn-consonants-tab" class="tab-btn border-b-2 border-teal-600 text-teal-600 py-4 px-1 text-sm font-medium font-semibold whitespace-nowrap cursor-pointer transition-all duration-200 flex items-center gap-2">
+                    <span>พยัญชนะ</span> <span class="bg-teal-50 px-2 py-0.5 rounded-full text-xs">42 Consonants</span>
+                </button>
+                <button onclick="switchTab('vowels-tab')" id="btn-vowels-tab" class="tab-btn border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 py-4 px-1 text-sm font-medium whitespace-nowrap cursor-pointer transition-all duration-200 flex items-center gap-2">
+                    <span>สระ</span> <span class="bg-slate-100 px-2 py-0.5 rounded-full text-xs text-slate-600">32 Vowels</span>
+                </button>
+                <button onclick="switchTab('tones-tab')" id="btn-tones-tab" class="tab-btn border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 py-4 px-1 text-sm font-medium whitespace-nowrap cursor-pointer transition-all duration-200 flex items-center gap-2">
+                    <span>วรรณยุกต์</span> <span class="bg-slate-100 px-2 py-0.5 rounded-full text-xs text-slate-600">Tone Rules Matrix</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Body -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- ================= TAB 1: CONSONANTS ================= -->
+        <section id="consonants-tab" class="tab-content block animate-fadeIn">
+            <!-- Filtering Toolbar -->
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 mb-6 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+                <div class="flex flex-wrap gap-2" id="consonant-filters">
+                    <button onclick="filterConsonants('all')" class="c-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-teal-600 text-white shadow-xs" data-class="all">All Classes</button>
+                    <button onclick="filterConsonants('mid')" class="c-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-class="mid">Mid Class (9)</button>
+                    <button onclick="filterConsonants('high')" class="c-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-class="high">High Class (10)</button>
+                    <button onclick="filterConsonants('low')" class="c-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-class="low">Low Class (23)</button>
+                </div>
+                <div class="relative min-w-[240px]">
+                    <input type="text" id="consonant-search" oninput="searchConsonants()" placeholder="Search sound or letter..." class="w-full pl-4 pr-10 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+                </div>
+            </div>
+
+            <!-- Class Quick Summary Alerts -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="p-4 bg-amber-50/70 border border-amber-200/60 rounded-xl text-xs sm:text-sm">
+                    <span class="font-bold text-amber-800 flex items-center gap-1">🟢 Mid Class (อักษรกลาง)</span>
+                    <p class="text-amber-700 mt-1">Produce flat baseline tones naturally. Dead syllables result in low tones.</p>
+                </div>
+                <div class="p-4 bg-rose-50/70 border border-rose-200/60 rounded-xl text-xs sm:text-sm">
+                    <span class="font-bold text-rose-800 flex items-center gap-1">🔴 High Class (อักษรสูง)</span>
+                    <p class="text-rose-700 mt-1">Produce rising baseline tones naturally. Dead syllables result in low tones.</p>
+                </div>
+                <div class="p-4 bg-sky-50/70 border border-sky-200/60 rounded-xl text-xs sm:text-sm">
+                    <span class="font-bold text-sky-800 flex items-center gap-1">🔵 Low Class (อักษรต่ำ)</span>
+                    <p class="text-sky-700 mt-1">Produce flat baseline tones. Tone rules behave completely differently here!</p>
+                </div>
+            </div>
+
+            <!-- Consonants Grid -->
+            <div id="consonants-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Dynamically Populated via JS -->
+            </div>
+        </section>
+
+
+        <!-- ================= TAB 2: VOWELS ================= -->
+        <section id="vowels-tab" class="tab-content hidden animate-fadeIn">
+            <!-- Filtering Toolbar -->
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 mb-6 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+                <div class="flex flex-wrap gap-2" id="vowel-filters">
+                    <button onclick="filterVowels('all')" class="v-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-teal-600 text-white shadow-xs" data-len="all">All Lengths</button>
+                    <button onclick="filterVowels('short')" class="v-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-len="short">Short Vowels</button>
+                    <button onclick="filterVowels('long')" class="v-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-slate-100 text-slate-700 hover:bg-slate-200" data-len="long">Long Vowels</button>
+                </div>
+                <div class="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                    💡 The dashed circle <span class="font-bold text-teal-600 font-mono">◌</span> represents where the consonant fits!
+                </div>
+            </div>
+
+            <!-- Vowels Grid -->
+            <div id="vowels-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- Dynamically Populated via JS -->
+            </div>
+        </section>
+
+
+        <!-- ================= TAB 3: TONE MATRIX ================= -->
+        <section id="tones-tab" class="tab-content hidden animate-fadeIn">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Left: Tone Markers Key -->
+                <div class="space-y-6 lg:col-span-1">
+                    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+                        <h3 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3 mb-4">The 4 Tone Markers</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-2 bg-slate-50 rounded-lg">
+                                <div class="w-12 h-12 flex items-center justify-center bg-white border border-slate-200 text-2xl font-bold rounded-lg text-teal-600 thai-font">◌่</div>
+                                <div>
+                                    <h4 class="font-semibold text-sm text-slate-800">Mai Ek (ไม้เอก)</h4>
+                                    <p class="text-xs text-slate-500">First marker symbol</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-2 bg-slate-50 rounded-lg">
+                                <div class="w-12 h-12 flex items-center justify-center bg-white border border-slate-200 text-2xl font-bold rounded-lg text-teal-600 thai-font">◌้</div>
+                                <div>
+                                    <h4 class="font-semibold text-sm text-slate-800">Mai Tho (ไม้โท)</h4>
+                                    <p class="text-xs text-slate-500">Second marker symbol</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-2 bg-slate-50 rounded-lg">
+                                <div class="w-12 h-12 flex items-center justify-center bg-white border border-slate-200 text-2xl font-bold rounded-lg text-teal-600 thai-font">◌๊</div>
+                                <div>
+                                    <h4 class="font-semibold text-sm text-slate-800">Mai Tri (ไม้ตรี)</h4>
+                                    <p class="text-xs text-slate-500">Third marker symbol</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-2 bg-slate-50 rounded-lg">
+                                <div class="w-12 h-12 flex items-center justify-center bg-white border border-slate-200 text-2xl font-bold rounded-lg text-teal-600 thai-font">◌๋</div>
+                                <div>
+                                    <h4 class="font-semibold text-sm text-slate-800">Mai Chattawa (ไม้จัตวา)</h4>
+                                    <p class="text-xs text-slate-500">Fourth marker symbol</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-200/70 text-amber-900 rounded-xl p-5 text-sm">
+                        <h4 class="font-bold flex items-center gap-1.5 mb-2">💡 Crucial Definition: Live vs. Dead Syllables</h4>
+                        <ul class="list-disc pl-5 space-y-1 text-xs text-amber-800">
+                            <li><strong>Live Syllables:</strong> End with a long vowel or smooth nasal sounds (<span class="font-semibold">M, N, NG</span>). They let the air flow continuously.</li>
+                            <li><strong>Dead Syllables:</strong> End with a short vowel or abrupt stop sounds (<span class="font-semibold">P, T, K</span>). They choke the airflow suddenly.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right: Master Rule Calculator Matrix -->
+                <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-xs lg:col-span-2">
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Dynamic Tone Rules Matrix</h3>
+                    <p class="text-sm text-slate-500 mb-6">In Thai, a tone marker doesn't mean a single fixed tone. Its sound changes radically depending on the structural class of the initial consonant. Click any cell intersection to isolate it!</p>
+
+                    <!-- Tone Matrix Responsive Table -->
+                    <div class="overflow-x-auto border border-slate-200 rounded-lg">
+                        <table class="w-full text-left text-sm border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                                    <th class="p-3 font-semibold text-xs uppercase tracking-wider">Consonant Class & Syllable</th>
+                                    <th class="p-3 font-semibold text-xs uppercase tracking-wider text-center">No Marker (Default)</th>
+                                    <th class="p-3 font-semibold text-xs uppercase tracking-wider text-center">Mai Ek (◌่)</th>
+                                    <th class="p-3 font-semibold text-xs uppercase tracking-wider text-center">Mai Tho (◌้)</th>
+                                    <th class="p-3 font-semibold text-xs uppercase tracking-wider text-center">Mai Tri (◌๊)</th>
+                                    <th class="p-3 font-semibold text-xs uppercase tracking-wider text-center">Mai Chat. (◌๋)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-xs font-medium">
+                                <!-- Mid Class -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 bg-amber-50/50 font-bold text-amber-900 border-r border-slate-200">🟢 Mid Class + Live</td>
+                                    <td class="p-3 text-center text-slate-700 bg-emerald-50 text-emerald-800 font-bold rounded-xs">Mid</td>
+                                    <td class="p-3 text-center text-slate-700">Low</td>
+                                    <td class="p-3 text-center text-slate-700">Falling</td>
+                                    <td class="p-3 text-center text-slate-700">High</td>
+                                    <td class="p-3 text-center text-slate-700">Rising</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 bg-amber-50/50 font-bold text-amber-900 border-r border-slate-200">🟢 Mid Class + Dead</td>
+                                    <td class="p-3 text-center text-slate-700">Low</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-700">Falling</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                </tr>
+                                <!-- High Class -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 bg-rose-50/50 font-bold text-rose-900 border-r border-slate-200">🔴 High Class + Live</td>
+                                    <td class="p-3 text-center text-slate-700 bg-sky-50 text-sky-800 font-bold rounded-xs">Rising</td>
+                                    <td class="p-3 text-center text-slate-700">Low</td>
+                                    <td class="p-3 text-center text-slate-700">Falling</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 bg-rose-50/50 font-bold text-rose-900 border-r border-slate-200">🔴 High Class + Dead</td>
+                                    <td class="p-3 text-center text-slate-700">Low</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                </tr>
+                                <!-- Low Class -->
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 bg-sky-50/50 font-bold text-sky-900 border-r border-slate-200">🔵 Low Class + Live</td>
+                                    <td class="p-3 text-center text-slate-700 bg-emerald-50 text-emerald-800 font-bold rounded-xs">Mid</td>
+                                    <td class="p-3 text-center text-amber-700 bg-amber-50 font-semibold border border-dashed border-amber-300">Falling</td>
+                                    <td class="p-3 text-center text-sky-700 bg-sky-50 font-semibold border border-dashed border-sky-300">High</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 bg-sky-50/50 font-bold text-sky-900 border-r border-slate-200">🔵 Low Class + Dead (Short)</td>
+                                    <td class="p-3 text-center text-slate-700 bg-sky-50 text-sky-800 font-bold rounded-xs">High</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-700">Falling</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 bg-sky-50/50 font-bold text-sky-900 border-r border-slate-200">🔵 Low Class + Dead (Long)</td>
+                                    <td class="p-3 text-center text-slate-700 bg-amber-50 text-amber-800 font-bold rounded-xs">Falling</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-700">High</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                    <td class="p-3 text-center text-slate-400">—</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 p-3 bg-slate-50 rounded-lg text-xs text-slate-500 border border-slate-200">
+                        ⚠️ <strong>Notice the Low Class Shifts:</strong> For Low Class consonants, adding a <strong>Mai Ek (◌่)</strong> marker creates a <em>Falling</em> tone instead of low, and adding a <strong>Mai Tho (◌้)</strong> marker creates a <em>High</em> tone!
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="bg-slate-900 text-slate-400 text-center py-4 border-t border-slate-800 mt-12 text-xs">
+        <p>© 2026 Personal Language Companion. Built for completely local and offline learning exploration.</p>
+    </footer>
+
+    <!-- Comprehensive Scripts (Containing the hardcoded Thai linguistic data objects) -->
+    <script>
+        // 42 Consonants Database object
+        const consonantsData = [
+            // MID CLASS (9)
+            { glyph: "ก", name: "Ko Kai", class: "mid", initial: "k", final: "k", meaning: "Chicken" },
+            { glyph: "จ", name: "Cho Chan", class: "mid", initial: "ch", final: "t", meaning: "Plate" },
+            { glyph: "ฎ", name: "Do Chada", class: "mid", initial: "d", final: "t", meaning: "Headdress" },
+            { glyph: "ฏ", name: "To Patak", class: "mid", initial: "t", final: "t", meaning: "Goad/Spear" },
+            { glyph: "ด", name: "Do Dek", class: "mid", initial: "d", final: "t", meaning: "Child" },
+            { glyph: "ต", name: "To Tao", class: "mid", initial: "t", final: "t", meaning: "Turtle" },
+            { glyph: "บ", name: "Bo Baimai", class: "mid", initial: "b", final: "p", meaning: "Leaf" },
+            { glyph: "ป", name: "Po Pla", class: "mid", initial: "p", final: "p", meaning: "Fish" },
+            { glyph: "อ", name: "O Ang", class: "mid", initial: "vowel anchor", final: "-", meaning: "Basin" },
+
+            // HIGH CLASS (11 - 1 obsolete removed)
+            { glyph: "ข", name: "Kho Khai", class: "high", initial: "kh", final: "k", meaning: "Egg" },
+            { glyph: "ฉ", name: "Cho Ching", class: "high", initial: "ch", final: "-", meaning: "Cymbals" },
+            { glyph: "ฐ", name: "Tho Than", class: "high", initial: "th", final: "t", meaning: "Pedestal" },
+            { glyph: "ถ", name: "Tho Thung", class: "high", initial: "th", final: "t", meaning: "Sack/Bag" },
+            { glyph: "ผ", name: "Pho Phueng", class: "high", initial: "ph", final: "-", meaning: "Bee" },
+            { glyph: "ฝ", name: "Fo Fa", class: "high", initial: "f", final: "-", meaning: "Lid/Cover" },
+            { glyph: "ศ", name: "So Sala", class: "high", initial: "s", final: "t", meaning: "Pavilion" },
+            { glyph: "ษ", name: "So Ruesi", class: "high", initial: "s", final: "t", meaning: "Hermit" },
+            { glyph: "ส", name: "So Suea", class: "high", initial: "s", final: "t", meaning: "Tiger" },
+            { glyph: "ห", name: "Ho Hip", class: "high", initial: "h", final: "-", meaning: "Chest/Box" },
+
+            // LOW CLASS (24 - 1 obsolete removed)
+            { glyph: "ค", name: "Kho Khwai", class: "low", initial: "kh", final: "k", meaning: "Buffalo" },
+            { glyph: "ฆ", name: "Kho Rakhang", class: "low", initial: "kh", final: "k", meaning: "Bell" },
+            { glyph: "ง", name: "Ngo Ngu", class: "low", initial: "ng", final: "ng", meaning: "Snake" },
+            { glyph: "ช", name: "Cho Chang", class: "low", initial: "ch", final: "t", meaning: "Elephant" },
+            { glyph: "ซ", name: "So So", class: "low", initial: "s", final: "t", meaning: "Chain" },
+            { glyph: "ฌ", name: "Cho Choe", class: "low", initial: "ch", final: "t", meaning: "Tree" },
+            { glyph: "ญ", name: "Yo Ying", class: "low", initial: "y", final: "n", meaning: "Woman" },
+            { glyph: "ฑ", name: "Tho Montho", class: "low", initial: "th/d", final: "t", meaning: "Ramayana Character" },
+            { glyph: "ฒ", name: "Tho Phuthao", class: "low", initial: "th", final: "t", meaning: "Elder" },
+            { glyph: "ณ", name: "No Nen", class: "low", initial: "n", final: "n", meaning: "Novice Monk" },
+            { glyph: "ท", name: "Tho Thahan", class: "low", initial: "th", final: "t", meaning: "Soldier" },
+            { glyph: "ธ", name: "Tho Thong", class: "low", initial: "th", final: "t", meaning: "Flag" },
+            { glyph: "น", name: "No Nu", class: "low", initial: "n", final: "n", meaning: "Mouse" },
+            { glyph: "พ", name: "Pho Phan", class: "low", initial: "ph", final: "p", meaning: "Tray" },
+            { glyph: "ฟ", name: "Fo Fan", class: "low", initial: "f", final: "p", meaning: "Teeth" },
+            { glyph: "ภ", name: "Pho Samphao", class: "low", initial: "ph", final: "p", meaning: "Sailing Boat" },
+            { glyph: "ม", name: "Mo Ma", class: "low", initial: "m", final: "m", meaning: "Horse" },
+            { glyph: "ย", name: "Yo Yak", class: "low", initial: "y", final: "-", meaning: "Giant" },
+            { glyph: "ร", name: "Ro Ruea", class: "low", initial: "r", final: "n", meaning: "Boat" },
+            { glyph: "ล", name: "Lo Ling", class: "low", initial: "l", final: "n", meaning: "Monkey" },
+            { glyph: "ว", name: "Wo Waen", class: "low", initial: "w", final: "-", meaning: "Ring" },
+            { glyph: "ฬ", name: "Lo Chula", class: "low", initial: "l", final: "n", meaning: "Kite" },
+            { glyph: "ฮ", name: "Ho Nokhuuk", class: "low", initial: "h", final: "-", meaning: "Owl" }
+        ];
+
+        const vowelsData = [
+            // Short & Long Pairs (12 Pairs = 24 Vowels)
+            { glyph: "◌ะ", name: "Sara A", len: "short", sound: "a (as in cup)" },
+            { glyph: "◌า", name: "Sara Aa", len: "long", sound: "aa (as in father)" },
+            
+            { glyph: "◌ิ", name: "Sara I", len: "short", sound: "i (as in sit)" },
+            { glyph: "◌ี", name: "Sara Ii", len: "long", sound: "ee (as in see)" },
+            
+            { glyph: "◌ึ", name: "Sara Ue", len: "short", sound: "ue (short unrounded 'u')" },
+            { glyph: "◌ื", name: "Sara Uee", len: "long", sound: "uee (long unrounded 'u')" },
+            
+            { glyph: "◌ุ", name: "Sara U", len: "short", sound: "u (as in put)" },
+            { glyph: "◌ู", name: "Sara Uu", len: "long", sound: "uu (as in moon)" },
+            
+            { glyph: "เ◌ะ", name: "Sara Eh", len: "short", sound: "eh (as in pet)" },
+            { glyph: "เ◌", name: "Sara Ay", len: "long", sound: "ay (as in say)" },
+            
+            { glyph: "แ◌ะ", name: "Sara Ae", len: "short", sound: "ae (as in cat)" },
+            { glyph: "แ◌", name: "Sara Aee", len: "long", sound: "aee (extended cat sound)" },
+            
+            { glyph: "โ◌ะ", name: "Sara O", len: "short", sound: "o (as in boat, but clipped short)" },
+            { glyph: "โ◌", name: "Sara Oh", len: "long", sound: "oh (drawn out oh)" },
+            
+            { glyph: "เ◌าะ", name: "Sara Aw", len: "short", sound: "aw (as in raw, clipped short)" },
+            { glyph: "◌อ", name: "Sara Orr", len: "long", sound: "orr (drawn out aw sound)" },
+            
+            { glyph: "เ◌อะ", name: "Sara Oe", len: "short", sound: "oe (short 'uh' sound)" },
+            { glyph: "เ◌อ", name: "Sara Oee", len: "long", sound: "oee (longer 'uh' sound)" },
+            
+            { glyph: "เ◌ียะ", name: "Sara Ia", len: "short", sound: "ia (short ee-ah)" },
+            { glyph: "เ◌ีย", name: "Sara Iaa", len: "long", sound: "iaa (long ee-ah, like in Sawatdee)" },
+            
+            { glyph: "เ◌ือะ", name: "Sara Uea", len: "short", sound: "uea (short unrounded u + ah)" },
+            { glyph: "เ◌ือ", name: "Sara Ueaa", len: "long", sound: "ueaa (long unrounded u + ah)" },
+            
+            { glyph: "ว◌ะ", name: "Sara Ua", len: "short", sound: "ua (short oo-ah)" },
+            { glyph: "◌ว", name: "Sara Uaa", len: "long", sound: "uaa (long oo-ah)" },
+
+            // Special Component Vowels (4)
+            { glyph: "◌ำ", name: "Sara Am", len: "short", sound: "am sound" },
+            { glyph: "ใ◌", name: "Sara Ai Mai Muan", len: "short", sound: "ai sound (used for specific words)" },
+            { glyph: "ไ◌", name: "Sara Ai Mai Malai", len: "short", sound: "ai sound (general use)" },
+            { glyph: "เ◌า", name: "Sara Ao", len: "short", sound: "ao sound (like cow)" }
+        ];
+
+        // System state management
+        let currentClassFilter = 'all';
+        let currentVowelFilter = 'all';
+
+        // Core UI Navigation function
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-teal-600', 'text-teal-600', 'font-semibold');
+                btn.classList.add('border-transparent', 'text-slate-500');
+            });
+            document.getElementById('btn-' + tabId).classList.add('border-teal-600', 'text-teal-600', 'font-semibold');
+            document.getElementById('btn-' + tabId).classList.remove('border-transparent', 'text-slate-500');
+        }
+
+        // Initialize Consonants view layout
+        function renderConsonants() {
+            const grid = document.getElementById('consonants-grid');
+            grid.innerHTML = '';
+            
+            const searchVal = document.getElementById('consonant-search').value.toLowerCase();
+
+            consonantsData.forEach(item => {
+                // Apply categorical class filtering
+                if (currentClassFilter !== 'all' && item.class !== currentClassFilter) return;
+                
+                // Apply search text criteria
+                if (searchVal && !item.name.toLowerCase().includes(searchVal) && 
+                    !item.glyph.includes(searchVal) && 
+                    !item.initial.toLowerCase().includes(searchVal) &&
+                    !item.meaning.toLowerCase().includes(searchVal)) {
+                    return;
+                }
+
+                // Pick correct border tint style by structural class
+                let classBorder = 'border-amber-200 hover:border-amber-400 bg-amber-50/20';
+                let tagColor = 'bg-amber-100 text-amber-800';
+                if (item.class === 'high') {
+                    classBorder = 'border-rose-200 hover:border-rose-400 bg-rose-50/20';
+                    tagColor = 'bg-rose-100 text-rose-800';
+                } else if (item.class === 'low') {
+                    classBorder = 'border-sky-200 hover:border-sky-400 bg-sky-50/20';
+                    tagColor = 'bg-sky-100 text-sky-800';
+                }
+
+                const card = document.createElement('div');
+                card.className = `bg-white p-4 rounded-xl border-2 ${classBorder} shadow-2xs transition-all duration-200 hover:-translate-y-0.5 flex flex-col items-center text-center relative overflow-hidden`;
+                card.innerHTML = `
+                    <div class="absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded-sm uppercase font-bold ${tagColor}">${item.class}</div>
+                    <div class="text-4xl font-bold text-slate-900 my-2 thai-font">${item.glyph}</div>
+                    <div class="font-bold text-sm text-slate-800">${item.name}</div>
+                    <div class="text-xs text-slate-400 italic mb-3">"${item.meaning}"</div>
+                    <div class="w-full grid grid-cols-2 gap-1 border-t border-slate-100 pt-2 text-[11px]">
+                        <div><span class="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">Initial</span><span class="font-semibold text-slate-700">${item.initial}</span></div>
+                        <div class="border-l border-slate-100"><span class="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">Final</span><span class="font-semibold text-slate-700">${item.final}</span></div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Handle filtering actions for Thai Consonants
+        function filterConsonants(classType) {
+            currentClassFilter = classType;
+            document.querySelectorAll('.c-filter-btn').forEach(btn => {
+                btn.className = "c-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-slate-100 text-slate-700 hover:bg-slate-200";
+            });
+            event.target.className = "c-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-teal-600 text-white shadow-xs";
+            renderConsonants();
+        }
+
+        function searchConsonants() {
+            renderConsonants();
+        }
+
+        // Initialize Vowels view layout
+        function renderVowels() {
+            const grid = document.getElementById('vowels-grid');
+            grid.innerHTML = '';
+
+            vowelsData.forEach(vowel => {
+                if (currentVowelFilter !== 'all' && vowel.len !== currentVowelFilter) return;
+
+                let lenTagColor = vowel.len === 'short' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800';
+
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col items-center text-center relative";
+                card.innerHTML = `
+                    <span class="absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded-sm uppercase font-bold ${lenTagColor}">${vowel.len}</span>
+                    <div class="text-3xl font-bold text-teal-600 my-2 tracking-wide font-mono thai-font">${vowel.glyph}</div>
+                    <div class="font-bold text-sm text-slate-800">${vowel.name}</div>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">${vowel.sound}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Handle filtering actions for Thai Vowels
+        function filterVowels(lenType) {
+            currentVowelFilter = lenType;
+            document.querySelectorAll('.v-filter-btn').forEach(btn => {
+                btn.className = "v-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-slate-100 text-slate-700 hover:bg-slate-200";
+            });
+            event.target.className = "v-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-teal-600 text-white shadow-xs";
+            renderVowels();
+        }
+
+        // Window Initializer triggers
+        window.onload = function() {
+            renderConsonants();
+            renderVowels();
+        };
+    </script>
+</body>
+</html>
