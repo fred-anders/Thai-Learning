@@ -4,24 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thai Language Learning Hub & Script Guide</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Traditional Elegant Style (With Loops) */
         .thai-font {
             font-family: 'Sarabun', sans-serif;
         }
+        /* Modern Loopless Geometric Style */
+        .modern-thai-font {
+            font-family: 'Noto Sans Thai', sans-serif;
+        }
+        /* Backdrop Animation Transition Profiles */
+        .modal-backdrop {
+            transition: opacity 0.2s ease-out;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col relative">
 
-    <!-- Header Banner -->
     <header class="bg-gradient-to-r from-teal-700 to-cyan-800 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
@@ -34,7 +40,6 @@
         </div>
     </header>
 
-    <!-- Main Navigation Tabs Bar -->
     <div class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex space-x-8 overflow-x-auto py-1">
@@ -42,7 +47,7 @@
                     <span>พยัญชนะ</span> <span class="bg-teal-50 px-2 py-0.5 rounded-full text-xs">42 Consonants</span>
                 </button>
                 <button onclick="switchTab('vowels-tab')" id="btn-vowels-tab" class="tab-btn border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 py-4 px-1 text-sm font-medium whitespace-nowrap cursor-pointer transition-all duration-200 flex items-center gap-2">
-                    <span>สระ</span> <span class="bg-slate-100 px-2 py-0.5 rounded-full text-xs text-slate-600">32 Vowels</span>
+                    <span>สระ</span> <span class="bg-slate-100 px-2 py-0.5 rounded-full text-xs text-slate-600">28 Active Vowels</span>
                 </button>
                 <button onclick="switchTab('tones-tab')" id="btn-tones-tab" class="tab-btn border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 py-4 px-1 text-sm font-medium whitespace-nowrap cursor-pointer transition-all duration-200 flex items-center gap-2">
                     <span>วรรณยุกต์</span> <span class="bg-slate-100 px-2 py-0.5 rounded-full text-xs text-slate-600">Tone Rules Matrix</span>
@@ -51,12 +56,9 @@
         </div>
     </div>
 
-    <!-- Main Content Body -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
-        <!-- ================= TAB 1: CONSONANTS ================= -->
-        <section id="consonants-tab" class="tab-content block animate-fadeIn">
-            <!-- Filtering Toolbar -->
+        <section id="consonants-tab" class="tab-content block">
             <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 mb-6 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
                 <div class="flex flex-wrap gap-2" id="consonant-filters">
                     <button onclick="filterConsonants('all')" class="c-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-teal-600 text-white shadow-xs" data-class="all">All Classes</button>
@@ -69,7 +71,6 @@
                 </div>
             </div>
 
-            <!-- Class Quick Summary Alerts -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div class="p-4 bg-amber-50/70 border border-amber-200/60 rounded-xl text-xs sm:text-sm">
                     <span class="font-bold text-amber-800 flex items-center gap-1">🟢 Mid Class (อักษรกลาง)</span>
@@ -85,16 +86,12 @@
                 </div>
             </div>
 
-            <!-- Consonants Grid -->
             <div id="consonants-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <!-- Dynamically Populated via JS -->
-            </div>
+                </div>
         </section>
 
 
-        <!-- ================= TAB 2: VOWELS ================= -->
-        <section id="vowels-tab" class="tab-content hidden animate-fadeIn">
-            <!-- Filtering Toolbar -->
+        <section id="vowels-tab" class="tab-content hidden">
             <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 mb-6 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
                 <div class="flex flex-wrap gap-2" id="vowel-filters">
                     <button onclick="filterVowels('all')" class="v-filter-btn px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all bg-teal-600 text-white shadow-xs" data-len="all">All Lengths</button>
@@ -106,18 +103,14 @@
                 </div>
             </div>
 
-            <!-- Vowels Grid -->
             <div id="vowels-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                <!-- Dynamically Populated via JS -->
-            </div>
+                </div>
         </section>
 
 
-        <!-- ================= TAB 3: TONE MATRIX ================= -->
-        <section id="tones-tab" class="tab-content hidden animate-fadeIn">
+        <section id="tones-tab" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
-                <!-- Left: Tone Markers Key -->
                 <div class="space-y-6 lg:col-span-1">
                     <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
                         <h3 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3 mb-4">The 4 Tone Markers</h3>
@@ -162,12 +155,10 @@
                     </div>
                 </div>
 
-                <!-- Right: Master Rule Calculator Matrix -->
                 <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-xs lg:col-span-2">
                     <h3 class="text-xl font-bold text-slate-900 mb-2">Dynamic Tone Rules Matrix</h3>
                     <p class="text-sm text-slate-500 mb-6">In Thai, a tone marker doesn't mean a single fixed tone. Its sound changes radically depending on the structural class of the initial consonant. Click any cell intersection to isolate it!</p>
 
-                    <!-- Tone Matrix Responsive Table -->
                     <div class="overflow-x-auto border border-slate-200 rounded-lg">
                         <table class="w-full text-left text-sm border-collapse">
                             <thead>
@@ -181,7 +172,6 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-200 text-xs font-medium">
-                                <!-- Mid Class -->
                                 <tr class="hover:bg-slate-50">
                                     <td class="p-3 bg-amber-50/50 font-bold text-amber-900 border-r border-slate-200">🟢 Mid Class + Live</td>
                                     <td class="p-3 text-center text-slate-700 bg-emerald-50 text-emerald-800 font-bold rounded-xs">Mid</td>
@@ -198,7 +188,6 @@
                                     <td class="p-3 text-center text-slate-400">—</td>
                                     <td class="p-3 text-center text-slate-400">—</td>
                                 </tr>
-                                <!-- High Class -->
                                 <tr class="hover:bg-slate-50">
                                     <td class="p-3 bg-rose-50/50 font-bold text-rose-900 border-r border-slate-200">🔴 High Class + Live</td>
                                     <td class="p-3 text-center text-slate-700 bg-sky-50 text-sky-800 font-bold rounded-xs">Rising</td>
@@ -215,7 +204,6 @@
                                     <td class="p-3 text-center text-slate-400">—</td>
                                     <td class="p-3 text-center text-slate-400">—</td>
                                 </tr>
-                                <!-- Low Class -->
                                 <tr class="hover:bg-slate-50">
                                     <td class="p-3 bg-sky-50/50 font-bold text-sky-900 border-r border-slate-200">🔵 Low Class + Live</td>
                                     <td class="p-3 text-center text-slate-700 bg-emerald-50 text-emerald-800 font-bold rounded-xs">Mid</td>
@@ -253,114 +241,150 @@
 
     </main>
 
-    <!-- Footer Area -->
+    <div id="details-modal" class="fixed inset-0 z-100 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 modal-backdrop opacity-0">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-slate-200 transform scale-95 transition-transform duration-200" id="modal-card">
+            
+            <div id="modal-header" class="p-5 bg-slate-100 border-b border-slate-200 relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-lg cursor-pointer">✕</button>
+                <div class="flex items-center gap-3">
+                    <span id="modal-badge" class="text-xs px-2.5 py-0.5 rounded-md uppercase font-bold bg-slate-200 text-slate-800">Class</span>
+                    <h2 id="modal-title" class="text-xl font-bold text-slate-900">Symbol Name</h2>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-6">
+                
+                <div>
+                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-2">Font Design Comparison</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Looped (Traditional)</span>
+                            <div id="font-looped" class="text-5xl text-slate-900 font-bold my-1 thai-font">ก</div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Noto Sans Thai (Modern)</span>
+                            <div id="font-simplified" class="text-5xl text-teal-600 font-bold my-1 modern-thai-font">ก</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 text-sm" id="consonant-only-metrics">
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold">Thai Word Meaning</span>
+                        <div class="font-bold text-slate-800 mt-0.5 flex items-baseline gap-1.5">
+                            <span id="meaning-thai" class="text-lg text-teal-700 font-medium thai-font">ไก่</span>
+                            <span id="meaning-en" class="text-xs text-slate-500 font-normal">("Chicken")</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold">Acoustic Initial/Final</span>
+                        <div class="font-bold text-slate-800 mt-1 text-xs">
+                            Initial: <span id="sound-initial" class="text-teal-700 font-semibold">k</span> | Final: <span id="sound-final" class="text-teal-700 font-semibold">k</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vowel-only-metrics" class="hidden bg-slate-50 p-3 rounded-xl border border-slate-100 text-sm">
+                    <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold">Phonetic Sound Profile</span>
+                    <p id="vowel-sound-desc" class="text-slate-700 font-medium mt-1">Vowel Sound Breakdown</p>
+                </div>
+
+                <button id="btn-audio-speak" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-xl shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2">
+                    <span>🔊</span> Play Native Voice Pronunciation
+                </button>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-slate-900 text-slate-400 text-center py-4 border-t border-slate-800 mt-12 text-xs">
         <p>© 2026 Personal Language Companion. Built for completely local and offline learning exploration.</p>
     </footer>
 
-    <!-- Comprehensive Scripts (Containing the hardcoded Thai linguistic data objects) -->
     <script>
-        // 42 Consonants Database object
         const consonantsData = [
             // MID CLASS (9)
-            { glyph: "ก", name: "Ko Kai", class: "mid", initial: "k", final: "k", meaning: "Chicken" },
-            { glyph: "จ", name: "Cho Chan", class: "mid", initial: "ch", final: "t", meaning: "Plate" },
-            { glyph: "ฎ", name: "Do Chada", class: "mid", initial: "d", final: "t", meaning: "Headdress" },
-            { glyph: "ฏ", name: "To Patak", class: "mid", initial: "t", final: "t", meaning: "Goad/Spear" },
-            { glyph: "ด", name: "Do Dek", class: "mid", initial: "d", final: "t", meaning: "Child" },
-            { glyph: "ต", name: "To Tao", class: "mid", initial: "t", final: "t", meaning: "Turtle" },
-            { glyph: "บ", name: "Bo Baimai", class: "mid", initial: "b", final: "p", meaning: "Leaf" },
-            { glyph: "ป", name: "Po Pla", class: "mid", initial: "p", final: "p", meaning: "Fish" },
-            { glyph: "อ", name: "O Ang", class: "mid", initial: "vowel anchor", final: "-", meaning: "Basin" },
+            { glyph: "ก", name: "Ko Kai", class: "mid", initial: "k", final: "k", meaning: "Chicken", nativeMeaning: "ไก่" },
+            { glyph: "จ", name: "Cho Chan", class: "mid", initial: "ch", final: "t", meaning: "Plate", nativeMeaning: "จาน" },
+            { glyph: "ฎ", name: "Do Chada", class: "mid", initial: "d", final: "t", meaning: "Headdress", nativeMeaning: "ชฎา" },
+            { glyph: "ฏ", name: "To Patak", class: "mid", initial: "t", final: "t", meaning: "Goad/Spear", nativeMeaning: "ปฏัก" },
+            { glyph: "ด", name: "Do Dek", class: "mid", initial: "d", final: "t", meaning: "Child", nativeMeaning: "เด็ก" },
+            { glyph: "ต", name: "To Tao", class: "mid", initial: "t", final: "t", meaning: "Turtle", nativeMeaning: "เต่า" },
+            { glyph: "บ", name: "Bo Baimai", class: "mid", initial: "b", final: "p", meaning: "Leaf", nativeMeaning: "ใบไม้" },
+            { glyph: "ป", name: "Po Pla", class: "mid", initial: "p", final: "p", meaning: "Fish", nativeMeaning: "ปลา" },
+            { glyph: "อ", name: "O Ang", class: "mid", initial: "vowel anchor", final: "-", meaning: "Basin", nativeMeaning: "อ่าง" },
 
-            // HIGH CLASS (11 - 1 obsolete removed)
-            { glyph: "ข", name: "Kho Khai", class: "high", initial: "kh", final: "k", meaning: "Egg" },
-            { glyph: "ฉ", name: "Cho Ching", class: "high", initial: "ch", final: "-", meaning: "Cymbals" },
-            { glyph: "ฐ", name: "Tho Than", class: "high", initial: "th", final: "t", meaning: "Pedestal" },
-            { glyph: "ถ", name: "Tho Thung", class: "high", initial: "th", final: "t", meaning: "Sack/Bag" },
-            { glyph: "ผ", name: "Pho Phueng", class: "high", initial: "ph", final: "-", meaning: "Bee" },
-            { glyph: "ฝ", name: "Fo Fa", class: "high", initial: "f", final: "-", meaning: "Lid/Cover" },
-            { glyph: "ศ", name: "So Sala", class: "high", initial: "s", final: "t", meaning: "Pavilion" },
-            { glyph: "ษ", name: "So Ruesi", class: "high", initial: "s", final: "t", meaning: "Hermit" },
-            { glyph: "ส", name: "So Suea", class: "high", initial: "s", final: "t", meaning: "Tiger" },
-            { glyph: "ห", name: "Ho Hip", class: "high", initial: "h", final: "-", meaning: "Chest/Box" },
+            // HIGH CLASS (10)
+            { glyph: "ข", name: "Kho Khai", class: "high", initial: "kh", final: "k", meaning: "Egg", nativeMeaning: "ไข่" },
+            { glyph: "ฉ", name: "Cho Ching", class: "high", initial: "ch", final: "-", meaning: "Cymbals", nativeMeaning: "ฉิ่ง" },
+            { glyph: "ฐ", name: "Tho Than", class: "high", initial: "th", final: "t", meaning: "Pedestal", nativeMeaning: "ฐาน" },
+            { glyph: "ถ", name: "Tho Thung", class: "high", initial: "th", final: "t", meaning: "Sack/Bag", nativeMeaning: "ถุง" },
+            { glyph: "ผ", name: "Pho Phueng", class: "high", initial: "ph", final: "-", meaning: "Bee", nativeMeaning: "ผึ้ง" },
+            { glyph: "ฝ", name: "Fo Fa", class: "high", initial: "f", final: "-", meaning: "Lid/Cover", nativeMeaning: "ฝา" },
+            { glyph: "ศ", name: "So Sala", class: "high", initial: "s", final: "t", meaning: "Pavilion", nativeMeaning: "ศาลา" },
+            { glyph: "ษ", name: "So Ruesi", class: "high", initial: "s", final: "t", meaning: "Hermit", nativeMeaning: "ฤๅษี" },
+            { glyph: "ส", name: "So Suea", class: "high", initial: "s", final: "t", meaning: "Tiger", nativeMeaning: "เสือ" },
+            { glyph: "ห", name: "Ho Hip", class: "high", initial: "h", final: "-", meaning: "Chest/Box", nativeMeaning: "หีบ" },
 
-            // LOW CLASS (24 - 1 obsolete removed)
-            { glyph: "ค", name: "Kho Khwai", class: "low", initial: "kh", final: "k", meaning: "Buffalo" },
-            { glyph: "ฆ", name: "Kho Rakhang", class: "low", initial: "kh", final: "k", meaning: "Bell" },
-            { glyph: "ง", name: "Ngo Ngu", class: "low", initial: "ng", final: "ng", meaning: "Snake" },
-            { glyph: "ช", name: "Cho Chang", class: "low", initial: "ch", final: "t", meaning: "Elephant" },
-            { glyph: "ซ", name: "So So", class: "low", initial: "s", final: "t", meaning: "Chain" },
-            { glyph: "ฌ", name: "Cho Choe", class: "low", initial: "ch", final: "t", meaning: "Tree" },
-            { glyph: "ญ", name: "Yo Ying", class: "low", initial: "y", final: "n", meaning: "Woman" },
-            { glyph: "ฑ", name: "Tho Montho", class: "low", initial: "th/d", final: "t", meaning: "Ramayana Character" },
-            { glyph: "ฒ", name: "Tho Phuthao", class: "low", initial: "th", final: "t", meaning: "Elder" },
-            { glyph: "ณ", name: "No Nen", class: "low", initial: "n", final: "n", meaning: "Novice Monk" },
-            { glyph: "ท", name: "Tho Thahan", class: "low", initial: "th", final: "t", meaning: "Soldier" },
-            { glyph: "ธ", name: "Tho Thong", class: "low", initial: "th", final: "t", meaning: "Flag" },
-            { glyph: "น", name: "No Nu", class: "low", initial: "n", final: "n", meaning: "Mouse" },
-            { glyph: "พ", name: "Pho Phan", class: "low", initial: "ph", final: "p", meaning: "Tray" },
-            { glyph: "ฟ", name: "Fo Fan", class: "low", initial: "f", final: "p", meaning: "Teeth" },
-            { glyph: "ภ", name: "Pho Samphao", class: "low", initial: "ph", final: "p", meaning: "Sailing Boat" },
-            { glyph: "ม", name: "Mo Ma", class: "low", initial: "m", final: "m", meaning: "Horse" },
-            { glyph: "ย", name: "Yo Yak", class: "low", initial: "y", final: "-", meaning: "Giant" },
-            { glyph: "ร", name: "Ro Ruea", class: "low", initial: "r", final: "n", meaning: "Boat" },
-            { glyph: "ล", name: "Lo Ling", class: "low", initial: "l", final: "n", meaning: "Monkey" },
-            { glyph: "ว", name: "Wo Waen", class: "low", initial: "w", final: "-", meaning: "Ring" },
-            { glyph: "ฬ", name: "Lo Chula", class: "low", initial: "l", final: "n", meaning: "Kite" },
-            { glyph: "ฮ", name: "Ho Nokhuuk", class: "low", initial: "h", final: "-", meaning: "Owl" }
+            // LOW CLASS (23)
+            { glyph: "ค", name: "Kho Khwai", class: "low", initial: "kh", final: "k", meaning: "Buffalo", nativeMeaning: "ควาย" },
+            { glyph: "ฆ", name: "Kho Rakhang", class: "low", initial: "kh", final: "k", meaning: "Bell", nativeMeaning: "ระฆัง" },
+            { glyph: "ง", name: "Ngo Ngu", class: "low", initial: "ng", final: "ng", meaning: "Snake", nativeMeaning: "งู" },
+            { glyph: "ช", name: "Cho Chang", class: "low", initial: "ch", final: "t", meaning: "Elephant", nativeMeaning: "ช้าง" },
+            { glyph: "ซ", name: "So So", class: "low", initial: "s", final: "t", meaning: "Chain", nativeMeaning: "โซ่" },
+            { glyph: "ฌ", name: "Cho Choe", class: "low", initial: "ch", final: "t", meaning: "Tree", nativeMeaning: "เฌอ" },
+            { glyph: "ญ", name: "Yo Ying", class: "low", initial: "y", final: "n", meaning: "Woman", nativeMeaning: "หญิง" },
+            { glyph: "ฑ", name: "Tho Montho", class: "low", initial: "th/d", final: "t", meaning: "Ramayana Character", nativeMeaning: "มณโฑ" },
+            { glyph: "ฒ", name: "Tho Phuthao", class: "low", initial: "th", final: "t", meaning: "Elder", nativeMeaning: "ผู้เฒ่า" },
+            { glyph: "ณ", name: "No Nen", class: "low", initial: "n", final: "n", meaning: "Novice Monk", nativeMeaning: "เณร" },
+            { glyph: "ท", name: "Tho Thahan", class: "low", initial: "th", final: "t", meaning: "Soldier", nativeMeaning: "ทหาร" },
+            { glyph: "ธ", name: "Tho Thong", class: "low", initial: "th", final: "t", meaning: "Flag", nativeMeaning: "ธง" },
+            { glyph: "น", name: "No Nu", class: "low", initial: "n", final: "n", meaning: "Mouse", nativeMeaning: "หนู" },
+            { glyph: "พ", name: "Pho Phan", class: "low", initial: "ph", final: "p", meaning: "Tray", nativeMeaning: "พาน" },
+            { glyph: "ฟ", name: "Fo Fan", class: "low", initial: "f", final: "p", meaning: "Teeth", nativeMeaning: "ฟัน" },
+            { glyph: "ภ", name: "Pho Samphao", class: "low", initial: "ph", final: "p", meaning: "Sailing Boat", nativeMeaning: "สำเภา" },
+            { glyph: "ม", name: "Mo Ma", class: "low", initial: "m", final: "m", meaning: "Horse", nativeMeaning: "ม้า" },
+            { glyph: "ย", name: "Yo Yak", class: "low", initial: "y", final: "-", meaning: "Giant", nativeMeaning: "ยักษ์" },
+            { glyph: "ร", name: "Ro Ruea", class: "low", initial: "r", final: "n", meaning: "Boat", nativeMeaning: "เรือ" },
+            { glyph: "ล", name: "Lo Ling", class: "low", initial: "l", final: "n", meaning: "Monkey", nativeMeaning: "ลิง" },
+            { glyph: "ว", name: "Wo Waen", class: "low", initial: "w", final: "-", meaning: "Ring", nativeMeaning: "แหวน" },
+            { glyph: "ฬ", name: "Lo Chula", class: "low", initial: "l", final: "n", meaning: "Kite", nativeMeaning: "จุฬา" },
+            { glyph: "ฮ", name: "Ho Nokhuuk", class: "low", initial: "h", final: "-", meaning: "Owl", nativeMeaning: "นกฮูก" }
         ];
 
         const vowelsData = [
-            // Short & Long Pairs (12 Pairs = 24 Vowels)
             { glyph: "◌ะ", name: "Sara A", len: "short", sound: "a (as in cup)" },
             { glyph: "◌า", name: "Sara Aa", len: "long", sound: "aa (as in father)" },
-            
             { glyph: "◌ิ", name: "Sara I", len: "short", sound: "i (as in sit)" },
             { glyph: "◌ี", name: "Sara Ii", len: "long", sound: "ee (as in see)" },
-            
             { glyph: "◌ึ", name: "Sara Ue", len: "short", sound: "ue (short unrounded 'u')" },
             { glyph: "◌ื", name: "Sara Uee", len: "long", sound: "uee (long unrounded 'u')" },
-            
             { glyph: "◌ุ", name: "Sara U", len: "short", sound: "u (as in put)" },
             { glyph: "◌ู", name: "Sara Uu", len: "long", sound: "uu (as in moon)" },
-            
             { glyph: "เ◌ะ", name: "Sara Eh", len: "short", sound: "eh (as in pet)" },
             { glyph: "เ◌", name: "Sara Ay", len: "long", sound: "ay (as in say)" },
-            
             { glyph: "แ◌ะ", name: "Sara Ae", len: "short", sound: "ae (as in cat)" },
             { glyph: "แ◌", name: "Sara Aee", len: "long", sound: "aee (extended cat sound)" },
-            
-            { glyph: "โ◌ะ", name: "Sara O", len: "short", sound: "o (as in boat, but clipped short)" },
+            { glyph: "โ◌ะ", name: "Sara O", len: "short", sound: "o (as in boat, clipped short)" },
             { glyph: "โ◌", name: "Sara Oh", len: "long", sound: "oh (drawn out oh)" },
-            
             { glyph: "เ◌าะ", name: "Sara Aw", len: "short", sound: "aw (as in raw, clipped short)" },
             { glyph: "◌อ", name: "Sara Orr", len: "long", sound: "orr (drawn out aw sound)" },
-            
             { glyph: "เ◌อะ", name: "Sara Oe", len: "short", sound: "oe (short 'uh' sound)" },
             { glyph: "เ◌อ", name: "Sara Oee", len: "long", sound: "oee (longer 'uh' sound)" },
-            
             { glyph: "เ◌ียะ", name: "Sara Ia", len: "short", sound: "ia (short ee-ah)" },
             { glyph: "เ◌ีย", name: "Sara Iaa", len: "long", sound: "iaa (long ee-ah, like in Sawatdee)" },
-            
             { glyph: "เ◌ือะ", name: "Sara Uea", len: "short", sound: "uea (short unrounded u + ah)" },
             { glyph: "เ◌ือ", name: "Sara Ueaa", len: "long", sound: "ueaa (long unrounded u + ah)" },
-            
             { glyph: "ว◌ะ", name: "Sara Ua", len: "short", sound: "ua (short oo-ah)" },
             { glyph: "◌ว", name: "Sara Uaa", len: "long", sound: "uaa (long oo-ah)" },
-
-            // Special Component Vowels (4)
             { glyph: "◌ำ", name: "Sara Am", len: "short", sound: "am sound" },
-            { glyph: "ใ◌", name: "Sara Ai Mai Muan", len: "short", sound: "ai sound (used for specific words)" },
+            { glyph: "ใ◌", name: "Sara Ai Mai Muan", len: "short", sound: "ai sound (used for 20 special words)" },
             { glyph: "ไ◌", name: "Sara Ai Mai Malai", len: "short", sound: "ai sound (general use)" },
             { glyph: "เ◌า", name: "Sara Ao", len: "short", sound: "ao sound (like cow)" }
         ];
 
-        // System state management
         let currentClassFilter = 'all';
         let currentVowelFilter = 'all';
 
-        // Core UI Navigation function
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
             document.getElementById(tabId).classList.remove('hidden');
@@ -370,21 +394,15 @@
                 btn.classList.add('border-transparent', 'text-slate-500');
             });
             document.getElementById('btn-' + tabId).classList.add('border-teal-600', 'text-teal-600', 'font-semibold');
-            document.getElementById('btn-' + tabId).classList.remove('border-transparent', 'text-slate-500');
         }
 
-        // Initialize Consonants view layout
         function renderConsonants() {
             const grid = document.getElementById('consonants-grid');
             grid.innerHTML = '';
-            
             const searchVal = document.getElementById('consonant-search').value.toLowerCase();
 
-            consonantsData.forEach(item => {
-                // Apply categorical class filtering
+            consonantsData.forEach((item, index) => {
                 if (currentClassFilter !== 'all' && item.class !== currentClassFilter) return;
-                
-                // Apply search text criteria
                 if (searchVal && !item.name.toLowerCase().includes(searchVal) && 
                     !item.glyph.includes(searchVal) && 
                     !item.initial.toLowerCase().includes(searchVal) &&
@@ -392,7 +410,6 @@
                     return;
                 }
 
-                // Pick correct border tint style by structural class
                 let classBorder = 'border-amber-200 hover:border-amber-400 bg-amber-50/20';
                 let tagColor = 'bg-amber-100 text-amber-800';
                 if (item.class === 'high') {
@@ -404,7 +421,8 @@
                 }
 
                 const card = document.createElement('div');
-                card.className = `bg-white p-4 rounded-xl border-2 ${classBorder} shadow-2xs transition-all duration-200 hover:-translate-y-0.5 flex flex-col items-center text-center relative overflow-hidden`;
+                card.className = `bg-white p-4 rounded-xl border-2 ${classBorder} shadow-2xs transition-all duration-200 hover:-translate-y-0.5 flex flex-col items-center text-center relative overflow-hidden cursor-pointer`;
+                card.setAttribute('onclick', `openConsonantModal(${index})`);
                 card.innerHTML = `
                     <div class="absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded-sm uppercase font-bold ${tagColor}">${item.class}</div>
                     <div class="text-4xl font-bold text-slate-900 my-2 thai-font">${item.glyph}</div>
@@ -419,7 +437,111 @@
             });
         }
 
-        // Handle filtering actions for Thai Consonants
+        function renderVowels() {
+            const grid = document.getElementById('vowels-grid');
+            grid.innerHTML = '';
+
+            vowelsData.forEach((vowel, index) => {
+                if (currentVowelFilter !== 'all' && vowel.len !== currentVowelFilter) return;
+
+                let lenTagColor = vowel.len === 'short' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800';
+
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col items-center text-center relative cursor-pointer";
+                card.setAttribute('onclick', `openVowelModal(${index})`);
+                card.innerHTML = `
+                    <span class="absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded-sm uppercase font-bold ${lenTagColor}">${vowel.len}</span>
+                    <div class="text-3xl font-bold text-teal-600 my-2 tracking-wide font-mono thai-font">${vowel.glyph}</div>
+                    <div class="font-bold text-sm text-slate-800">${vowel.name}</div>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">${vowel.sound}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openConsonantModal(index) {
+            const data = consonantsData[index];
+            const header = document.getElementById('modal-header');
+            const badge = document.getElementById('modal-badge');
+            
+            header.className = "p-5 border-b border-slate-200 relative bg-gradient-to-r text-white " + 
+                (data.class === 'mid' ? 'from-amber-600 to-amber-700' : data.class === 'high' ? 'from-rose-600 to-rose-700' : 'from-sky-600 to-sky-700');
+            badge.className = "text-xs px-2.5 py-0.5 rounded-md uppercase font-bold bg-white/20 text-white";
+            badge.innerText = `${data.class} Class`;
+
+            document.getElementById('modal-title').innerText = data.name;
+            document.getElementById('font-looped').innerText = data.glyph;
+            document.getElementById('font-simplified').innerText = data.glyph;
+
+            document.getElementById('consonant-only-metrics').classList.remove('hidden');
+            document.getElementById('vowel-only-metrics').classList.add('hidden');
+            document.getElementById('meaning-thai').innerText = data.nativeMeaning;
+            document.getElementById('meaning-en').innerText = `("${data.meaning}")`;
+            document.getElementById('sound-initial').innerText = data.initial;
+            document.getElementById('sound-final').innerText = data.final;
+
+            document.getElementById('btn-audio-speak').onclick = function() {
+                playNativeAudio(`${data.glyph} ${data.nativeMeaning}`);
+            };
+            showModalContainer();
+        }
+
+        function openVowelModal(index) {
+            const data = vowelsData[index];
+            const header = document.getElementById('modal-header');
+            const badge = document.getElementById('modal-badge');
+            
+            header.className = "p-5 border-b border-slate-200 relative bg-gradient-to-r from-teal-600 to-cyan-700 text-white";
+            badge.className = "text-xs px-2.5 py-0.5 rounded-md uppercase font-bold bg-white/20 text-white";
+            badge.innerText = `${data.len} Length`;
+
+            document.getElementById('modal-title').innerText = data.name;
+            document.getElementById('font-looped').innerText = data.glyph;
+            document.getElementById('font-simplified').innerText = data.glyph;
+
+            document.getElementById('consonant-only-metrics').classList.add('hidden');
+            document.getElementById('vowel-only-metrics').classList.remove('hidden');
+            document.getElementById('vowel-sound-desc').innerText = data.sound;
+
+            const speakString = data.glyph.replace('◌', '');
+            document.getElementById('btn-audio-speak').onclick = function() {
+                playNativeAudio(speakString);
+            };
+            showModalContainer();
+        }
+
+        function showModalContainer() {
+            const wrapper = document.getElementById('details-modal');
+            const card = document.getElementById('modal-card');
+            wrapper.classList.remove('hidden');
+            setTimeout(() => {
+                wrapper.classList.remove('opacity-0');
+                card.classList.remove('scale-95');
+                card.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const wrapper = document.getElementById('details-modal');
+            const card = document.getElementById('modal-card');
+            wrapper.classList.add('opacity-0');
+            card.classList.remove('scale-100');
+            card.classList.add('scale-95');
+            setTimeout(() => wrapper.classList.add('hidden'), 200);
+        }
+
+        function playNativeAudio(textString) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(textString);
+                utterance.lang = 'th-TH';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Speech synthesis not supported in this browser.');
+            }
+        }
+
         function filterConsonants(classType) {
             currentClassFilter = classType;
             document.querySelectorAll('.c-filter-btn').forEach(btn => {
@@ -433,29 +555,6 @@
             renderConsonants();
         }
 
-        // Initialize Vowels view layout
-        function renderVowels() {
-            const grid = document.getElementById('vowels-grid');
-            grid.innerHTML = '';
-
-            vowelsData.forEach(vowel => {
-                if (currentVowelFilter !== 'all' && vowel.len !== currentVowelFilter) return;
-
-                let lenTagColor = vowel.len === 'short' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800';
-
-                const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col items-center text-center relative";
-                card.innerHTML = `
-                    <span class="absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded-sm uppercase font-bold ${lenTagColor}">${vowel.len}</span>
-                    <div class="text-3xl font-bold text-teal-600 my-2 tracking-wide font-mono thai-font">${vowel.glyph}</div>
-                    <div class="font-bold text-sm text-slate-800">${vowel.name}</div>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">${vowel.sound}</p>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // Handle filtering actions for Thai Vowels
         function filterVowels(lenType) {
             currentVowelFilter = lenType;
             document.querySelectorAll('.v-filter-btn').forEach(btn => {
@@ -465,10 +564,12 @@
             renderVowels();
         }
 
-        // Window Initializer triggers
         window.onload = function() {
             renderConsonants();
             renderVowels();
+            document.getElementById('details-modal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
         };
     </script>
 </body>
